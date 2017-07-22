@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue lesson1--介绍</title>
+		<script type="text/javascript" src="js/vue.js" ></script>
+		<style>
+			div{
+				margin:10px auto;
+				padding:20px;
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h3>1.创建vue实例</h3>
+			{{ message }}
+		</div>
+		<div id="app2">
+			<h3>2.v-bind指令绑定文本到data</h3>
+			<span v-bind:title="message">
+				鼠标悬停查看绑定的title
+			</span>
+		</div>
+		<div id="app3">
+			<h3>3.v-if条件语句</h3>
+			<p v-if="seen">看见的</p>
+			<p v-if="not_seen">看不见的</p>
+		</div>
+		<div id="app4">
+			<h3>4.v-for循环语句</h3>
+			<ol>
+				<li v-for="todo in todos">{{todo.text}}</li>
+			</ol>
+		</div>
+		<div id="app5">
+			<h3>5.v-on:event绑定事件</h3>
+			<p>{{message}}</p>
+			<button v-on:click="reverseMessage">反转消息</button>
+		</div>
+		<div id="app6">
+			<h3>6.表单输入和应用状态的双向绑定</h3>
+			<p>{{message}}</p>
+			<input v-model="message"/>
+		</div>
+		<div id="app7">
+			<h3>7.component声明</h3>
+			<ol>
+				<todo-item
+					v-for="item in list"
+					v-bind:todo="item"
+					v-bind:key="item.id"
+				></todo-item>
+			</ol>
+		</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el:"#app",
+				data:{
+					message:"Hello Vue!"
+				}
+			})
+			console.log("app instance:",app)
+			var app2 = new Vue({
+				el:"#app2",
+				data:{
+					message:"页面加载于" + new Date()
+				}
+			})
+			var app3 = new Vue({
+				el:"#app3",
+				data:{
+					seen:true,
+					not_seen:false
+				}
+			})
+			var app4 = new Vue({
+				el:"#app4",
+				data:{
+					todos:[
+						{id:1,text:"todo1"},
+						{id:2,text:"todo2"},
+						{id:3,text:"todo3"}
+					]
+				}
+			})
+			var app5 = new Vue({
+				el:"#app5",
+				data:{
+					message:'Hello Vue'
+				},
+				methods:{
+					reverseMessage:function(){
+						this.message = this.message.split("").reverse().join("")
+					}
+				}
+			})
+			var app6 = new Vue({
+				el:"#app6",
+				data:{
+					message:"Hello Vue"
+				}
+			})
+			Vue.component("todo-item",{
+				props:["todo"],
+				template:"<li>{{todo.text}}</li>"
+			})
+			var app7 = new Vue({
+				el:"#app7",
+				data:{
+					list:[
+						{id:1,text:"白菜"},
+						{id:2,text:"土豆"},
+						{id:3,text:"西红柿"}
+					]
+				}
+			})
+		</script>
+	</body>
+</html>
