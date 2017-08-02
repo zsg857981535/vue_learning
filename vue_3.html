@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>模板</title>
+		<link href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+		<link href='http://fonts.googlefonts.net/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<style>
+			body {
+				font-family: 'Droid Serif', serif !important;
+			}
+			
+			div,
+			p {
+				margin: 10px auto;
+				padding: 20px;
+				border: 1px solid #ccc;
+				font-family: 'Droid Serif', serif !important;
+			}
+			
+			pre {
+				font-family: 'Droid Serif', serif !important;
+				background-color: #CCCCCC;
+				padding: 10px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<p>{{msg}}</p>
+			<p v-once>This is will never change:{{msg}}</p>
+			<div v-html="htmlStr">{{htmlStr}}</div>
+			<div v-bind:id="dynamicId">属性不能使用Mustache(就是这种{{}})</div>
+			<button v-bind:disabled="isButtonDisabled">Button is or not disbaled</button>
+			<div>
+				表达式: {{number + 1}} {{msg.split('').reverse().join(',')}} {{ ok ? "yes" : "no"}}
+			</div>
+			<div>
+				<h5>指令</h5>
+				<p v-if="seen">v-if指令</p>
+				<p>
+					<a v-bind:href="url">v-bind:href</a>
+				</p>
+				<p>
+					<a v-on:click="dosomething">绑定click事件</a>
+				</p>
+				<form v-on:submit.prevent="onSubmit">
+					修饰符半角句号.,指定一个指令以特殊的方式绑定
+					<button type="submit">提交表单</button>
+				</form>
+			</div>
+			<div>
+				<h5>过滤器,可以用在两个地方mustache插值和v-bind表达式,可以串联,可以接收参数</h5>
+				mustache:{{ msg | capitalize}}
+			</div>
+			<div>
+				<h5>缩写</h5>
+				<p><a :href="url">v-bind缩写</a></p>
+				<p><a @click="dosomething">v-on:click缩写</a></p>
+			</div>
+		</div>
+		<script>
+			var app = new Vue({
+				el: "#app",
+				data: {
+					msg: 'message',
+					htmlStr: "<p>I am html string</p>",
+					dynamicId: "id",
+					isButtonDisabled: true,
+					number: 1,
+					ok: true,
+					seen: true,
+					url: "http://www.baidu.com"
+				},
+				methods: {
+					dosomething: function() {
+						console.log("do something...")
+					},
+					onSubmit: function() {
+						console.log("提交表单")
+					}
+				},
+				filters:{
+					capitalize:function(value){
+						if(!value)return ''
+						value = value.toString()
+						return value.charAt(0).toUpperCase() +value.slice(1)
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>
